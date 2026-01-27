@@ -4,7 +4,7 @@
 
 This is a real production war story.
 
-**What went wrong:**
+**What went wrong: **
 - Agent tested perfectly locally
 - Deployed to production Tuesday 3 PM
 - Worked for 2 hours

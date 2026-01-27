@@ -1,5 +1,38 @@
 [
   {
+    "title": "I Over-Engineered Agentic AI Project BIG Time Here's What I Learned",
+    "slug": "i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned",
+    "youtubeId": "xyIe8dqdQRw",
+    "date": "2026-01-27",
+    "description": "I spent 3 weeks building a complex multi-agent system. 5 specialized agents. Orchestration layer. State management. Message queues. It was beautiful. Sophisticated. Complex. And completely unnecessary. The problem: Answer customer FAQs. **What I built:** - Agent 1: Intent classifier - Agent 2: FAQ retrieval - Agent 3: Knowledge search - Agent 4: Response generator - Agent 5: Quality checker - Plus orchestration, state management, message queues",
+    "descriptionFile": "/resources/i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Join Bootcamp, Be Future Ready",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
     "title": "Deploying Agents: AWS vs Azure vs GCP (Real-World Decision Guide) Agentic AI",
     "slug": "deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai",
     "youtubeId": "Wx_LAHdZ2P0",

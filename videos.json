@@ -1,5 +1,38 @@
 [
   {
+    "title": "NVIDIA NCP-AAI Agentic AI Professional What to Study AFTER Registering for the Exam (Complete Guide)",
+    "slug": "nvidia-ncp-aai-agentic-ai-professional-what-to-study-after-registering-for-the-exam-complete-guide",
+    "youtubeId": "xlFpyI392VY",
+    "date": "2026-01-27",
+    "description": "Just registered for NVIDIA NCP-AAI certification? Here's your complete study guide. **Exam details:** • 60-70 multiple choice questions • 120 minutes (2 hours) • Pass score: 70% (need 42-49 correct) • Cost: $200 • Valid for 2 years **What's tested (10 domains):** **HIGH-WEIGHT (43%):** • Agent Architecture and Design - 15% • Agent Development - 15% • Evaluation and Tuning - 13% **MEDIUM-WEIGHT (27%):** • Cognition, Planning, and Memory - 10% •",
+    "descriptionFile": "/resources/nvidia-ncp-aai-agentic-ai-professional-what-to-study-after-registering-for-the-exam-complete-guide/description.md",
+    "tags": [
+      "nvidia-ncpaai",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/nvidia-ncp-aai-agentic-ai-professional-what-to-study-after-registering-for-the-exam-complete-guide/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/nvidia-ncp-aai-agentic-ai-professional-what-to-study-after-registering-for-the-exam-complete-guide/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/nvidia-ncp-aai-agentic-ai-professional-what-to-study-after-registering-for-the-exam-complete-guide/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Get NVIDIA NCP AAI prep Pack\n",
+      "url": "https://learn.manifoldailearning.com/services/nvidiancpaai"
+    }
+  },
+  {
     "title": "All Production Agents Failed at This Layer (11/12 Systems)",
     "slug": "all-production-agents-failed-at-this-layer-11-12-systems",
     "youtubeId": "DwCdvlSimf8",

@@ -1,5 +1,72 @@
 [
   {
+    "title": "Your Agent Tests Are Wrong (How Production Teams Actually Test Agents)",
+    "slug": "your-agent-tests-are-wrong-how-production-teams-actually-test-agents",
+    "youtubeId": "YmVCIhSgaFs",
+    "date": "2026-01-27",
+    "description": "Your agent tests are probably useless. Not because testing agents is impossible. But because you're testing the wrong things. **The Problem:** - LLM outputs are non-deterministic - Tool calls vary - Conversation flows are dynamic - Traditional `assert response == \"expected\"` fails constantly **The Solution: 3-Layer Testing Framework** **Layer 1: Unit Testing** Test tool functions, not the agent - API calls work correctly - Error handling",
+    "descriptionFile": "/resources/your-agent-tests-are-wrong-how-production-teams-actually-test-agents/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "testing"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/your-agent-tests-are-wrong-how-production-teams-actually-test-agents/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/your-agent-tests-are-wrong-how-production-teams-actually-test-agents/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/your-agent-tests-are-wrong-how-production-teams-actually-test-agents/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production testing + deployment strategies on the Bootcamp",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "Production Failed at 11:47 PM Agentic AI — How We Saved a $60,000 Deployment",
+    "slug": "production-failed-at-11-47-pm-agentic-ai-how-we-saved-a-60-000-deployment",
+    "youtubeId": "-SrtK5Ryo5s",
+    "date": "2026-01-27",
+    "description": "# Promotional Content: How We Saved a $60k Deployment (Production War Story) ## YOUTUBE TITLE OPTIONS **Option 1 (Story hook):** How We Saved a $60k Deployment (11 PM Production Crisis) **Option 2 (Stakes-focused):** $60k Contract on the Line: Production Crisis War Story **Option 3 (Lesson-focused):** Why Your Agent Will Fail in Production (War Story + Lessons) **Option 4 (Time pressure):** 10 Hours to Fix or Lose $60k (Production War Story)",
+    "descriptionFile": "/resources/production-failed-at-11-47-pm-agentic-ai-how-we-saved-a-60-000-deployment/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/production-failed-at-11-47-pm-agentic-ai-how-we-saved-a-60-000-deployment/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/production-failed-at-11-47-pm-agentic-ai-how-we-saved-a-60-000-deployment/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/production-failed-at-11-47-pm-agentic-ai-how-we-saved-a-60-000-deployment/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Master Production Patterns, Join Bootcamp",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
     "title": "Real Agentic AI Interview Questions (Senior Engineers Fail These)",
     "slug": "real-agentic-ai-interview-questions-senior-engineers-fail-these",
     "youtubeId": "fRzUZSOS8ds",

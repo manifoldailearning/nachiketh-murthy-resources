@@ -1,8 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://manifoldailearning.github.io',
-  base: '/nachiketh-murthy-resources',
+  site: 'https://resources.nachiketh.in',
+  base: '/',
   trailingSlash: 'always',
 });
-

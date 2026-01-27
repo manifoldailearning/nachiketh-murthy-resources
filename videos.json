@@ -1,5 +1,74 @@
 [
   {
+    "title": "Why Senior Roles Reject Your Agent Portfolio (Experienced)",
+    "slug": "why-senior-roles-reject-your-agent-portfolio-experienced",
+    "youtubeId": "I2KHKbV5WNk",
+    "date": "2026-01-27",
+    "description": "Reviewed 20 portfolios for senior agentic AI roles. 19 made the same mistake: Showed WHAT they built, not HOW it runs in production. s hire for \"can ship and maintain\" not just \"can build.\" 📋 Portfolio templates & checklists: 👉 https://community.nachiketh.in 🎓 Production systems bootcamp: 👉 https://bootcamp.nachiketh.in (Starts Feb 15) Demos get junior interviews. Production thinking gets senior offers. #CareerAdvice #MLEngineer #AgenticAI",
+    "descriptionFile": "/resources/why-senior-roles-reject-your-agent-portfolio-experienced/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview",
+      "career"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/why-senior-roles-reject-your-agent-portfolio-experienced/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/why-senior-roles-reject-your-agent-portfolio-experienced/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/why-senior-roles-reject-your-agent-portfolio-experienced/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Prepare your Portfolio for Working Professionals",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "Most Agents Don't Need LONG TERM MEMORY",
+    "slug": "most-agents-don-t-need-long-term-memory",
+    "youtubeId": "KUmwZBFWh-o",
+    "date": "2026-01-27",
+    "description": "Your agent probably doesn't need long-term memory. I just saved a client $40,000 by deleting their entire memory system and replacing it with better context assembly. In this video, I break down: ✓ When long-term memory adds ZERO value ✓ Real cost breakdown ($67K/year for most teams) ✓ The 3-test framework to decide if you need it ✓ Production data: 0.23% impact rate in most cases ✓ When you actually DO need long-term memory I reviewed 47",
+    "descriptionFile": "/resources/most-agents-don-t-need-long-term-memory/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "testing"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/most-agents-don-t-need-long-term-memory/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/most-agents-don-t-need-long-term-memory/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/most-agents-don-t-need-long-term-memory/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production Memory Strategy on Bootcamp",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
     "title": "Your Agent Tests Are Wrong (How Production Teams Actually Test Agents)",
     "slug": "your-agent-tests-are-wrong-how-production-teams-actually-test-agents",
     "youtubeId": "YmVCIhSgaFs",

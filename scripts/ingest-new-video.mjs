@@ -6,7 +6,7 @@ const ROOT = process.cwd();
 const VIDEOS_PATH = path.join(ROOT, 'videos.json');
 const PUBLIC_RESOURCES = path.join(ROOT, 'public', 'resources');
 
-const SITE_FULL_BASE_URL = 'https://manifoldailearning.github.io/nachiketh-murthy-resources';
+const SITE_FULL_BASE_URL = 'https://manifoldailearning.github.io/';
 
 function usage(exitCode = 1) {
   console.error('Usage: npm run ingest -- --youtube "<url>" [--cta-label "<text>" --cta-url "<url>"]');

@@ -13,7 +13,7 @@ npm run dev
 
 - **Enable Pages**: GitHub repo → **Settings** → **Pages** → **Source** = **GitHub Actions**
 - **Workflow**: `.github/workflows/deploy.yml` deploys on every push to `main`
-- **Verify URL**: `https://manifoldailearning.github.io/`
+- **Verify URL**: `https://manifoldailearning.github.io/nachiketh-murthy-resources/`
 
 ## Ingest workflow (YouTube + `inbox/next/`)
 

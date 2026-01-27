@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentic AI Interview – Experienced Hire (Core Questions)</title>
+    <title>Agentic AI Interview – Experienced Hire (Part 2)</title>
     <style>
         * {
             margin: 0;
@@ -41,6 +41,8 @@
         .slide-2 { background: linear-gradient(135deg, #2d1b2e 0%, #1a0d1a 100%); }
         .slide-3 { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
         .slide-4 { background: linear-gradient(135deg, #2d1b1b 0%, #1a0f0f 100%); }
+        .slide-5 { background: linear-gradient(135deg, #0f1b1a 0%, #1a2e2a 100%); }
+        .slide-6 { background: linear-gradient(135deg, #0f1a2e 0%, #1a0d2e 100%); }
 
         h1 {
             font-size: 4rem;
@@ -95,6 +97,17 @@
             gap: 40px;
             max-width: 1100px;
             margin: 20px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.15);
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            font-size: 0.9rem;
+            margin-right: 8px;
+            margin-bottom: 8px;
         }
 
         .highlight-box {
@@ -206,8 +219,8 @@
 
         <!-- SLIDE 1: Title & Context -->
         <div class="slide slide-1">
-            <h1 class="animate">Agentic AI Interview<br>Experienced Hire</h1>
-            <div class="subtitle animate">How senior engineers get evaluated</div>
+            <h1 class="animate">Agentic AI Interview<br>Experienced Hire – Part 2</h1>
+            <div class="subtitle animate">Memory, failure handling, and evaluation questions</div>
             <div class="card animate">
                 <div class="card-title">Target Roles</div>
                 <div class="card-list">
@@ -230,85 +243,139 @@
             </div>
         </div>
 
-        <!-- SLIDE 2: Q1 Multi vs Single Agent -->
+        <!-- SLIDE 2: Q3 Memory Design -->
         <div class="slide slide-2">
-            <h2 class="animate">Q1: Multi-Agent vs Single Agent</h2>
-            <div class="subtitle animate">“When would you choose a single agent instead of a multi-agent system?”</div>
+            <h2 class="animate">Q3: Memory Design Decisions</h2>
+            <div class="subtitle animate">“How do you design memory for an agentic system?”</div>
             <div class="two-column animate">
                 <div class="card">
                     <div class="card-title">What the Interviewer Is Testing</div>
                     <div class="card-list">
-                        • Context‑driven architecture decisions<br>
-                        • Trade-off thinking<br>
-                        • Production cost and latency awareness
+                        • System design thinking<br>
+                        • Privacy and compliance awareness<br>
+                        • Failure mode handling
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-title">Strong Answer Signals</div>
                     <div class="card-list">
-                        • Clarifies constraints before answering<br>
-                        • Mentions latency and orchestration cost<br>
-                        • Explains failure domain isolation<br>
-                        • Gives scenario‑based justification
+                        • Separates short-term vs long-term memory<br>
+                        • Explains when <em>not</em> to store memory<br>
+                        • Mentions audit and replay needs
                     </div>
                 </div>
             </div>
             <div class="card animate">
                 <div class="card-title">Weak Answer Signals</div>
                 <div class="card-list">
-                    • “Multi‑agent is always better”<br>
-                    • “Single agent is simpler so start there”<br>
-                    • No cost or latency discussion
+                    • Just naming a vector database<br>
+                    • No privacy or retention discussion
                 </div>
-            </div>
-            <div class="highlight-box animate">
-                Follow-up: How would you observe failures here?<br>
-                What changes at 10× traffic? How do you debug this in prod?
             </div>
             <div class="footer-cta animate">
                 <a href="https://community.nachiketh.in" target="_blank">Get Free Production patterns & Tips : https://community.nachiketh.in</a>
             </div>
         </div>
 
-        <!-- SLIDE 3: Q2 Planner vs Executor -->
+        <!-- SLIDE 3: Q4 Failure Handling -->
         <div class="slide slide-3">
-            <h2 class="animate">Q2: Planner vs Executor Roles</h2>
-            <div class="subtitle animate">“Why separate planner and executor agents?”</div>
+            <h2 class="animate">Q4: Failure Handling & Retries</h2>
+            <div class="subtitle animate">“An external API call fails. What happens next?”</div>
             <div class="two-column animate">
                 <div class="card">
                     <div class="card-title">What the Interviewer Is Testing</div>
                     <div class="card-list">
-                        • Failure isolation understanding<br>
-                        • Control and observability mindset
+                        • Production readiness<br>
+                        • Idempotency awareness<br>
+                        • Operational experience
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-title">Strong Answer Signals</div>
                     <div class="card-list">
-                        • Planner owns state and decisions<br>
-                        • Executors are constrained and replaceable<br>
-                        • Mentions retry and substitution logic
+                        • Partial failure handling<br>
+                        • Safe retries via idempotency<br>
+                        • Timeouts and backoff strategy<br>
+                        • Observability and tracing
                     </div>
                 </div>
             </div>
             <div class="card animate">
                 <div class="card-title">Weak Answer Signals</div>
                 <div class="card-list">
-                    • “Just a design pattern”<br>
-                    • Only “cleaner code” explanation
+                    • “Retry three times with try/catch”<br>
+                    • No observability discussion
                 </div>
             </div>
             <div class="highlight-box animate">
-                Follow-up: What happens if the planner crashes?<br>
-                How do you replay execution?
+                Follow-up: How do you prevent cascading failures?<br>
+                How would you debug this at 3 AM?
             </div>
             <div class="footer-cta animate">
                 <a href="https://community.nachiketh.in" target="_blank">Get Free Production patterns & Tips : https://community.nachiketh.in</a>
             </div>
         </div>
 
-        <!-- SLIDE 4: CTA (matched to Part 2) -->
+        <!-- SLIDE 4: Q5 Evaluation & HITL -->
         <div class="slide slide-4">
+            <h2 class="animate">Q5: Evaluation & Human in the Loop</h2>
+            <div class="subtitle animate">“How do you know your agent is working correctly?”</div>
+            <div class="two-column animate">
+                <div class="card">
+                    <div class="card-title">What the Interviewer Is Testing</div>
+                    <div class="card-list">
+                        • Evaluation as a continuous process<br>
+                        • Risk‑based automation decisions
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Strong Answer Signals</div>
+                    <div class="card-list">
+                        • Automated evaluation + human approval gates<br>
+                        • Mentions regression and monitoring<br>
+                        • Explains which actions require humans
+                    </div>
+                </div>
+            </div>
+            <div class="card animate">
+                <div class="card-title">Weak Answer Signals</div>
+                <div class="card-list">
+                    • “Test with a few examples”<br>
+                    • “Human reviews everything”
+                </div>
+            </div>
+            <div class="highlight-box animate">
+                Follow-up: How do you detect drift?<br>
+                How do you measure quality over time?
+            </div>
+            <div class="footer-cta animate">
+                <a href="https://community.nachiketh.in" target="_blank">Get Free Production patterns & Tips : https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Interview Success Patterns -->
+        <div class="slide slide-5">
+            <h2 class="animate">Interview Success Patterns</h2>
+            <div class="card animate">
+                <div class="card-title">How Strong Candidates Answer</div>
+                <div class="card-list">
+                    • Ask clarifying questions first<br>
+                    • Explain trade-offs explicitly<br>
+                    • Think out loud<br>
+                    • Discuss failure modes proactively
+                </div>
+            </div>
+            <div class="highlight-box animate">
+                You’re not just answering questions.<br>
+                You’re demonstrating how you design, ship, and operate agentic systems.
+            </div>
+            <div class="footer-cta animate">
+                <a href="https://community.nachiketh.in" target="_blank">Get Free Production patterns & Tips : https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: CTA -->
+        <div class="slide slide-6">
             <h2 class="animate">Go From “LLM User” to “Production Engineer”</h2>
             <div class="cta-box animate">
                 <div class="cta-title">🚀 Agentic AI Enterprise Bootcamp</div>

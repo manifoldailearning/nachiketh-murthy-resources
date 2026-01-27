@@ -1,5 +1,73 @@
 [
   {
+    "title": "Real Agentic AI Interview Questions (Senior Engineers Fail These)",
+    "slug": "real-agentic-ai-interview-questions-senior-engineers-fail-these",
+    "youtubeId": "fRzUZSOS8ds",
+    "date": "2026-01-27",
+    "description": "# Agentic AI Interview – Experienced Hire ## INTERVIEW CONTEXT ### Target Roles - Backend Engineers - ML Engineers - Platform Engineers - AI Engineers (3+ years) ### Interview Focus - System design thinking - Production experience - Failure handling and trade-offs ## Q1: Multi Agent vs Single Agent ### Interview Question - When would you choose a single agent instead of a multi agent system? ### What the Interviewer Is Testing - Context driven",
+    "descriptionFile": "/resources/real-agentic-ai-interview-questions-senior-engineers-fail-these/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview-prep"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/real-agentic-ai-interview-questions-senior-engineers-fail-these/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/real-agentic-ai-interview-questions-senior-engineers-fail-these/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/real-agentic-ai-interview-questions-senior-engineers-fail-these/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Join Bootcamp, Be Interview Ready",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "5 REAL AGENTIC AI INTERVIEW QUESTIONS (Experienced Hire Level)",
+    "slug": "5-real-agentic-ai-interview-questions-experienced-hire-level",
+    "youtubeId": "jdBvB4ndlB4",
+    "date": "2026-01-27",
+    "description": "# Agentic AI Interview – Experienced Hire - Part 2 ## INTERVIEW CONTEXT ### Target Roles - Backend Engineers - ML Engineers - Platform Engineers - AI Engineers (3+ years) ### Interview Focus - System design thinking - Production experience - Failure handling and trade-offs ## Q3: Memory Design Decisions ### Interview Question - How do you design memory for an agentic system? ### What the Interviewer Is Testing - System design thinking - Privacy",
+    "descriptionFile": "/resources/5-real-agentic-ai-interview-questions-experienced-hire-level/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview-prep"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/5-real-agentic-ai-interview-questions-experienced-hire-level/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/5-real-agentic-ai-interview-questions-experienced-hire-level/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/5-real-agentic-ai-interview-questions-experienced-hire-level/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Join Bootcamp, Be Interview Ready",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
     "title": "I Over-Engineered Agentic AI Project BIG Time Here's What I Learned",
     "slug": "i-over-engineered-agentic-ai-project-big-time-here-s-what-i-learned",
     "youtubeId": "xyIe8dqdQRw",

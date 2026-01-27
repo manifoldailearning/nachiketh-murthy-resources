@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Readiness Audit - Slides</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0a0a0a;
+            --color-surface: #141414;
+            --color-text: #e8e8e8;
+            --color-text-dim: #a0a0a0;
+            --color-accent: #00D9FF;
+            
+            --color-critical: #FF3B4A;
+            --color-warning: #FF9500;
+            --color-caution: #FFD60A;
+            --color-success: #30D158;
+            
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-bg);
+            font-family: var(--font-mono);
+        }
+
+        .reveal {
+            font-family: var(--font-mono);
+            color: var(--color-text);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .reveal h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--color-accent), var(--color-success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .reveal h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--color-accent);
+        }
+
+        .reveal section {
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* SLIDE 1: 7-Layer Architecture */
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+            background: var(--color-surface);
+            border-left: 4px solid var(--color-text-dim);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--color-text-dim);
+            transition: width 0.3s ease;
+        }
+
+        .layer-item.critical {
+            border-left-color: var(--color-critical);
+            background: radial-gradient(circle at 0% 50%, rgba(255, 59, 74, 0.14), rgba(20, 20, 20, 0.9));
+            box-shadow: 0 0 24px rgba(255, 59, 74, 0.35);
+        }
+
+        .layer-item.critical::before {
+            background: var(--color-critical);
+            width: 10px;
+        }
+
+        .layer-number {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--color-accent);
+            min-width: 60px;
+        }
+
+        .layer-item.critical .layer-number {
+            color: #ffffff;
+        }
+
+        .layer-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .layer-item.critical .layer-name {
+            color: #ffffff;
+        }
+
+        .layer-indicator {
+            font-size: 2rem;
+        }
+
+        .gap-label {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.3rem;
+            color: var(--color-critical);
+            font-weight: 700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* SLIDE 2: Score Interpretation */
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .score-box {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.8rem 2rem;
+            border-radius: 12px;
+            border: 3px solid;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .score-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .score-box.production-ready {
+            border-color: var(--color-success);
+            background: var(--color-surface);
+        }
+
+        .score-box.production-ready::before {
+            background: var(--color-success);
+        }
+
+        .score-box.deploy-caution {
+            border-color: var(--color-caution);
+            background: var(--color-surface);
+        }
+
+        .score-box.deploy-caution::before {
+            background: var(--color-caution);
+        }
+
+        .score-box.not-ready {
+            border-color: var(--color-warning);
+            background: var(--color-surface);
+        }
+
+        .score-box.not-ready::before {
+            background: var(--color-warning);
+        }
+
+        .score-box.demo-quality {
+            border-color: var(--color-critical);
+            background: var(--color-surface);
+        }
+
+        .score-box.demo-quality::before {
+            background: var(--color-critical);
+        }
+
+        .score-range {
+            font-size: 2.2rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            min-width: 150px;
+        }
+
+        .score-box.production-ready .score-range { color: var(--color-success); }
+        .score-box.deploy-caution .score-range { color: var(--color-caution); }
+        .score-box.not-ready .score-range { color: var(--color-warning); }
+        .score-box.demo-quality .score-range { color: var(--color-critical); }
+
+        .score-content {
+            flex: 1;
+        }
+
+        .score-label {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.02em;
+        }
+
+        .score-description {
+            font-size: 1.05rem;
+            color: var(--color-text-dim);
+            line-height: 1.5;
+        }
+
+        .score-icon {
+            font-size: 3rem;
+        }
+
+        .score-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+        }
+
+        .average-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 1.2rem 1.6rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--color-text-dim);
+        }
+
+        .average-note strong {
+            color: var(--color-warning);
+            font-weight: 700;
+        }
+
+        /* SLIDE 3: Summary + CTAs */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .comparison-box {
+            padding: 2rem;
+            border-radius: 12px;
+            border: 3px solid;
+            background: var(--color-surface);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        .comparison-box.poc {
+            border-color: var(--color-critical);
+        }
+
+        .comparison-box.production {
+            border-color: var(--color-success);
+        }
+
+        .comparison-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .comparison-box.poc .comparison-title { color: var(--color-critical); }
+        .comparison-box.production .comparison-title { color: var(--color-success); }
+
+        .comparison-list {
+            list-style: none;
+            font-size: 1.2rem;
+            line-height: 1.9;
+        }
+
+        .comparison-list li {
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .comparison-list li::before {
+            position: absolute;
+            left: 0;
+            font-size: 1.4rem;
+        }
+
+        .comparison-box.poc li::before {
+            content: '❌';
+        }
+
+        .comparison-box.production li::before {
+            content: '✅';
+        }
+
+        .cta-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cta-card {
+            padding: 2.5rem;
+            border-radius: 12px;
+            background: var(--color-surface);
+            border: 3px solid var(--color-accent);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
+        }
+
+        .cta-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 34px rgba(0, 217, 255, 0.35);
+        }
+
+        .cta-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-accent);
+        }
+
+        .cta-description {
+            font-size: 1.05rem;
+            color: var(--color-text-dim);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .cta-link {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            font-family: var(--font-mono);
+        }
+
+        .cta-link:hover {
+            background: var(--color-success);
+            transform: scale(1.05);
+        }
+
+        .cta-url {
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: var(--color-text-dim);
+            font-family: var(--font-mono);
+        }
+
+        /* Slide Footer */
+        .slide-footer {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 2rem;
+            right: 2rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--color-text-dim);
+            font-family: var(--font-mono);
+            z-index: 10;
+        }
+
+        .slide-footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .slide-footer a:hover {
+            color: var(--color-success);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- SLIDE 1: 7-Layer Architecture -->
+            <section>
+                <h2>The 7-Layer Production Framework</h2>
+                
+                <div class="layer-stack">
+                    <div class="layer-item">
+                        <div class="layer-number">7</div>
+                        <div class="layer-name">User Interface</div>
+                        <div class="layer-indicator">⚪</div>
+                    </div>
+                    
+                    <div class="layer-item critical">
+                        <div class="layer-number">6</div>
+                        <div class="layer-name">Observability</div>
+                        <div class="layer-indicator">🔴</div>
+                    </div>
+                    
+                    <div class="layer-item critical">
+                        <div class="layer-number">5</div>
+                        <div class="layer-name">Orchestration</div>
+                        <div class="layer-indicator">🔴</div>
+                    </div>
+                    
+                    <div class="layer-item">
+                        <div class="layer-number">4</div>
+                        <div class="layer-name">Agent Reasoning</div>
+                        <div class="layer-indicator">⚪</div>
+                    </div>
+                    
+                    <div class="layer-item">
+                        <div class="layer-number">3</div>
+                        <div class="layer-name">RAG & Memory</div>
+                        <div class="layer-indicator">⚪</div>
+                    </div>
+                    
+                    <div class="layer-item">
+                        <div class="layer-number">2</div>
+                        <div class="layer-name">Tool Selection</div>
+                        <div class="layer-indicator">⚪</div>
+                    </div>
+                    
+                    <div class="layer-item">
+                        <div class="layer-number">1</div>
+                        <div class="layer-name">Prompt Engineering</div>
+                        <div class="layer-indicator">⚪</div>
+                    </div>
+                </div>
+                
+                <div class="gap-label">
+                    ⚠️ MOST SYSTEMS FAIL AT LAYERS 5-6
+                </div>
+                
+                <div class="slide-footer">
+                    Get source code at : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: Score Interpretation -->
+            <section>
+                <h2>What Your Score Means</h2>
+                
+                <div class="score-grid">
+                    <div class="score-box production-ready">
+                        <div class="score-range">90-100</div>
+                        <div class="score-content">
+                            <div class="score-label">Production-Ready</div>
+                            <div class="score-description">Deploy with confidence. All 7 layers properly implemented.</div>
+                        </div>
+                        <div class="score-icon">✅</div>
+                    </div>
+                    
+                    <div class="score-box deploy-caution">
+                        <div class="score-range">70-89</div>
+                        <div class="score-content">
+                            <div class="score-label">Deploy with Caution</div>
+                            <div class="score-description">Fix critical gaps before scaling. Monitor closely.</div>
+                        </div>
+                        <div class="score-icon">⚠️</div>
+                    </div>
+                    
+                    <div class="score-box not-ready">
+                        <div class="score-range">50-69</div>
+                        <div class="score-content">
+                            <div class="score-label">NOT Production-Ready</div>
+                            <div class="score-description">Major infrastructure gaps. DO NOT deploy until fixed.</div>
+                        </div>
+                        <div class="score-icon">🚨</div>
+                    </div>
+                    
+                    <div class="score-box demo-quality">
+                        <div class="score-range">&lt;50</div>
+                        <div class="score-content">
+                            <div class="score-label">Demo Quality</div>
+                            <div class="score-description">Missing critical layers. Rebuild from scratch.</div>
+                        </div>
+                        <div class="score-icon">🛑</div>
+                    </div>
+                </div>
+                
+                <div class="average-note">
+                    Most systems score <strong>50-60</strong> (Not production-ready)
+                </div>
+                
+                <div class="slide-footer">
+                    Get source code at : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: Summary + CTAs -->
+            <section>
+                <h2>Production Systems Need Infrastructure</h2>
+                
+                <div class="comparison-container">
+                    <div class="comparison-box poc">
+                        <div class="comparison-title">POC/Demo Systems</div>
+                        <ul class="comparison-list">
+                            <li>Work in testing</li>
+                            <li>Fail in production</li>
+                            <li>No visibility</li>
+                            <li>Surprise costs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-box production">
+                        <div class="comparison-title">Production Systems</div>
+                        <ul class="comparison-list">
+                            <li>Handle failures</li>
+                            <li>Prevent duplicates</li>
+                            <li>Full observability</li>
+                            <li>Cost control</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-card">
+                        <div class="cta-icon">📥</div>
+                        <div class="cta-title">Get the Audit Tool</div>
+                        <div class="cta-description">
+                            Free production readiness assessment. Run it in 5 minutes.
+                        </div>
+                        <a href="https://community.nachiketh.in" target="_blank" class="cta-link">
+                            Join Community
+                        </a>
+                        <span class="cta-url">community.nachiketh.in</span>
+                    </div>
+                    
+                    <div class="cta-card">
+                        <div class="cta-icon">🎓</div>
+                        <div class="cta-title">Learn All 7 Layers</div>
+                        <div class="cta-description">
+                            Enterprise Bootcamp. Build production systems. Starts Feb 15.
+                        </div>
+                        <a href="https://bootcamp.nachiketh.in" target="_blank" class="cta-link">
+                            Apply to Bootcamp
+                        </a>
+                        <span class="cta-url">bootcamp.nachiketh.in</span>
+                    </div>
+                </div>
+                
+                <div class="slide-footer">
+                    Get source code at : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1920,
+            height: 1080,
+            margin: 0.04,
+            transition: 'fade',
+            transitionSpeed: 'fast',
+            backgroundTransition: 'fade',
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            slideNumber: false
+        });
+    </script>
+</body>
+</html>

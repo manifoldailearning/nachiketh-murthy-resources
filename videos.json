@@ -1,5 +1,215 @@
 [
   {
+    "title": "All Production Agents Failed at This Layer (11/12 Systems)",
+    "slug": "all-production-agents-failed-at-this-layer-11-12-systems",
+    "youtubeId": "DwCdvlSimf8",
+    "date": "2026-01-27",
+    "description": "I reviewed 12 real production agent deployments last month. 11 of them failed. Not because of the LLM. Not because of RAG. Not because of prompts. They all failed at the same place: orchestration. In this video, I break down the exact Layer where production agent systems collapse — and why most tutorials completely skip it. You’ll see real failure cases: • 1,200 duplicate Slack messages in 6 hours • 847 duplicate Stripe charges ($84,000 impact)",
+    "descriptionFile": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems Agentic AI bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "Is Your Agent System Safe to Deploy? (Free Production Audit)",
+    "slug": "is-your-agent-system-safe-to-deploy-free-production-audit",
+    "youtubeId": "QdW_e9-iIRg",
+    "date": "2026-01-27",
+    "description": "In the **Agentic AI Enterprise Bootcamp**, we build: • All 7 layers, production-grade • Proper orchestration (retries, idempotency, circuit breakers) • Full observability & cost tracking • Real deployments — not demos 📅 Next cohort starts **February 15** 👉 https://bootcamp.nachiketh.in 🚨 Most agent systems fail within 48 hours of production deployment. Not because the LLM is bad. Not because RAG is broken. But because critical production",
+    "descriptionFile": "/resources/is-your-agent-system-safe-to-deploy-free-production-audit/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview",
+      "rag"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/is-your-agent-system-safe-to-deploy-free-production-audit/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/is-your-agent-system-safe-to-deploy-free-production-audit/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/is-your-agent-system-safe-to-deploy-free-production-audit/description.txt"
+      },
+      {
+        "label": "Source Code",
+        "type": "code",
+        "url": "/resources/is-your-agent-system-safe-to-deploy-free-production-audit/Production_Audit_Report.ipynb"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems Agentic AI bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "RAG is Overrated (Here’s What You Actually Need)",
+    "slug": "rag-is-overrated-here-s-what-you-actually-need",
+    "youtubeId": "Gl8oV40ONkU",
+    "date": "2026-01-27",
+    "description": "Decision framework: Do you really need RAG? Most teams jump straight to RAG without asking if simpler solutions work. In this video: - You probably don't need RAG - Why everyone builds RAG - The Test (3 alternatives) - What RAG actually adds - Better alternatives - Decision framework - When you DO need RAG 📥 Get the decision framework: 👉 https://community.nachiketh.in 🎓 Learn production LLM systems: 👉 https://bootcamp.nachiketh.in The best",
+    "descriptionFile": "/resources/rag-is-overrated-here-s-what-you-actually-need/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview",
+      "rag"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/rag-is-overrated-here-s-what-you-actually-need/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/rag-is-overrated-here-s-what-you-actually-need/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/rag-is-overrated-here-s-what-you-actually-need/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems Agentic AI bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "$40,000 Burned. 3 POCs Failed. This Is What Finally Worked",
+    "slug": "40-000-burned-3-pocs-failed-this-is-what-finally-worked",
+    "youtubeId": "GYVUlaYVZrA",
+    "date": "2026-01-27",
+    "description": "Real client case study: 90 days, $40k burned, 3 failed attempts, 1 success. What they tried: → Attempt 1: Multi-agent system (too complex, couldn't debug) → Attempt 2: Single agent (too simple, couldn't scale) → Attempt 3: LangGraph (too hard to understand) What finally worked: → Single agent + worker pattern (deployed in 3 weeks) In this video: - 90 days, $40k burned, 0 deployed - The Setup - Attempt 1: Multi-agent (FAILED) - Attempt 2: Single",
+    "descriptionFile": "/resources/40-000-burned-3-pocs-failed-this-is-what-finally-worked/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/40-000-burned-3-pocs-failed-this-is-what-finally-worked/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/40-000-burned-3-pocs-failed-this-is-what-finally-worked/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/40-000-burned-3-pocs-failed-this-is-what-finally-worked/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems Agentic AI bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "The Planner-Worker Pattern Everyone Gets Wrong",
+    "slug": "the-planner-worker-pattern-everyone-gets-wrong",
+    "youtubeId": "YudTYyBR94o",
+    "date": "2026-01-27",
+    "description": "Everyone implements planner-worker wrong. The mistake: Sequential execution instead of iterative re-evaluation. In this video: - The common mistake - Wrong vs right approach - State management strategies - Three biggest mistakes - Retry strategies (4 approaches) - Weekend project (build it yourself) - Key principles Core insight: Plan one step at a time, workers report back, planner adjusts. 📥 Weekend project guide + implementation examples: 👉",
+    "descriptionFile": "/resources/the-planner-worker-pattern-everyone-gets-wrong/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/the-planner-worker-pattern-everyone-gets-wrong/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/the-planner-worker-pattern-everyone-gets-wrong/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/the-planner-worker-pattern-everyone-gets-wrong/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems Agentic AI bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "Building Guardrails That Don’t Kill Latency (2.5s → 850ms)",
+    "slug": "building-guardrails-that-don-t-kill-latency-2-5s-850ms",
+    "youtubeId": "f7L66Cj2K30",
+    "date": "2026-01-27",
+    "description": "\"Our guardrails add 2.5 seconds to every request.\" Here's how to fix it. - The latency problem (2.5s → 850ms) - Why sync guardrails kill UX - Wrong vs right approach - Where guardrails belong (Pre/Post/HITL) - PII detection strategy (3 layers) - Policy enforcement patterns - The results (3x faster, same safety) Key insight: Separate what MUST be sync from what CAN be async. 📥 Guardrails patterns & templates: 👉 https://community.nachiketh.in 🎓",
+    "descriptionFile": "/resources/building-guardrails-that-don-t-kill-latency-2-5s-850ms/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai",
+      "interview"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/building-guardrails-that-don-t-kill-latency-2-5s-850ms/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/building-guardrails-that-don-t-kill-latency-2-5s-850ms/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/building-guardrails-that-don-t-kill-latency-2-5s-850ms/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Production systems bootcamp\n",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
     "title": "Why Senior Roles Reject Your Agent Portfolio (Experienced)",
     "slug": "why-senior-roles-reject-your-agent-portfolio-experienced",
     "youtubeId": "I2KHKbV5WNk",

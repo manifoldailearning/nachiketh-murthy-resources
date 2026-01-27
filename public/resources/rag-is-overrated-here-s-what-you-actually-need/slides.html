@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG is Overrated - Here's What You Actually Need</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #fafafa;
+            --color-surface: #ffffff;
+            --color-text: #1a1a1a;
+            --color-text-dim: #666666;
+            
+            --color-primary: #FF3B4A;
+            --color-secondary: #FFB800;
+            --color-accent: #0066FF;
+            --color-success: #00D66A;
+            
+            --font-display: 'Archivo Black', sans-serif;
+            --font-mono: 'Martian Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--color-bg);
+            font-family: var(--font-mono);
+        }
+
+        .reveal {
+            font-family: var(--font-mono);
+            color: var(--color-text);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal section {
+            padding: 3rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .reveal h1, .reveal h2 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .reveal h1 {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        .reveal h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Slide-specific styles */
+        .title-slide {
+            background: var(--color-primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(-15deg);
+        }
+
+        .title-slide h1 {
+            font-size: 6rem;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide .subtitle {
+            font-size: 2rem;
+            font-weight: 600;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-slide .warning-label {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* The Test slide */
+        .test-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        .test-question {
+            padding: 2.5rem;
+            background: var(--color-surface);
+            border-left: 8px solid var(--color-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .test-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .test-option {
+            padding: 2rem;
+            background: var(--color-surface);
+            border: 3px solid var(--color-text);
+            font-size: 1.3rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .test-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .test-verdict {
+            margin-top: 2rem;
+            padding: 2rem 3rem;
+            background: var(--color-primary);
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* RAG Adds slide */
+        .complexity-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+        }
+
+        .complexity-item {
+            padding: 2rem;
+            background: var(--color-surface);
+            border-left: 6px solid var(--color-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .complexity-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .complexity-label {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .complexity-desc {
+            font-size: 1.2rem;
+            color: var(--color-text-dim);
+            line-height: 1.4;
+        }
+
+        /* Decision Framework slide */
+        .decision-tree {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .decision-node {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: var(--color-surface);
+            border: 3px solid var(--color-text);
+            position: relative;
+        }
+
+        .decision-node::after {
+            content: '↓';
+            position: absolute;
+            bottom: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .decision-node:last-child::after {
+            display: none;
+        }
+
+        .decision-number {
+            font-size: 3rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            color: var(--color-primary);
+            min-width: 80px;
+        }
+
+        .decision-content {
+            flex: 1;
+        }
+
+        .decision-question {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .decision-answer {
+            font-size: 1.2rem;
+            color: var(--color-text-dim);
+        }
+
+        .decision-outcome {
+            padding: 1rem 2rem;
+            background: var(--color-primary);
+            color: white;
+            font-weight: 800;
+            font-size: 1.3rem;
+            border-radius: 4px;
+        }
+
+        .decision-outcome.simple {
+            background: var(--color-success);
+        }
+
+        /* When to Use RAG slide */
+        .when-to-use {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1100px;
+        }
+
+        .use-case {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem 2.5rem;
+            background: var(--color-surface);
+            border-left: 8px solid var(--color-success);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .use-case-icon {
+            font-size: 3.5rem;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .use-case-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .use-case-example {
+            font-size: 1.1rem;
+            color: var(--color-text-dim);
+            margin-top: 0.5rem;
+        }
+
+        /* Global slide CTA */
+        .slide-cta {
+            margin-top: 3rem;
+            font-size: 1.1rem;
+            color: var(--color-text-dim);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 1rem;
+        }
+
+        .slide-cta span {
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* CTA slide */
+        .cta-container {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cta-principle {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--color-surface);
+            border: 4px solid var(--color-text);
+            line-height: 1.3;
+        }
+
+        .cta-highlight {
+            color: var(--color-primary);
+            display: block;
+            margin-top: 1rem;
+        }
+
+        .cta-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cta-card {
+            padding: 2.5rem;
+            background: var(--color-surface);
+            border: 4px solid var(--color-text);
+            transition: all 0.3s ease;
+        }
+
+        .cta-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-label {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .cta-url {
+            font-size: 1.2rem;
+            color: var(--color-text-dim);
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>RAG IS<br>OVERRATED</h1>
+                <div class="subtitle">Here's What You Actually Need</div>
+                <div class="warning-label">⚠️ CONTRARIAN TAKE</div>
+                <div class="slide-cta">
+                    Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                </div>
+            </section>
+
+            <!-- SLIDE 2: The Test -->
+            <section>
+                <h2>The Test</h2>
+                
+                <div class="test-container">
+                    <div class="test-question">
+                        Can you solve your problem with:
+                    </div>
+                    
+                    <div class="test-options">
+                        <div class="test-option">
+                            Structured<br>Few-Shot<br>Examples
+                        </div>
+                        <div class="test-option">
+                            Chain-of-Thought<br>Prompting
+                        </div>
+                        <div class="test-option">
+                            Function Calling<br>+<br>Clear Schemas
+                        </div>
+                    </div>
+                    
+                    <div class="test-verdict">
+                        IF YES → YOU DON'T NEED RAG
+                    </div>
+                    <div class="slide-cta">
+                        Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: RAG Adds... -->
+            <section>
+                <h2>RAG Adds...</h2>
+                
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <div class="complexity-icon">🏗️</div>
+                        <div class="complexity-label">Infrastructure Complexity</div>
+                        <div class="complexity-desc">
+                            Vector databases, embedding pipelines, deployment overhead
+                        </div>
+                    </div>
+                    
+                    <div class="complexity-item">
+                        <div class="complexity-icon">💰</div>
+                        <div class="complexity-label">Database Costs</div>
+                        <div class="complexity-desc">
+                            Pinecone, Weaviate, Qdrant - $50-500/month minimum
+                        </div>
+                    </div>
+                    
+                    <div class="complexity-item">
+                        <div class="complexity-icon">⚙️</div>
+                        <div class="complexity-label">Chunking Overhead</div>
+                        <div class="complexity-desc">
+                            Splitting strategies, overlap logic, metadata management
+                        </div>
+                    </div>
+                    
+                    <div class="complexity-item">
+                        <div class="complexity-icon">⏱️</div>
+                        <div class="complexity-label">Retrieval Latency</div>
+                        <div class="complexity-desc">
+                            Additional 200-500ms per request for embedding + search
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-cta">
+                    Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Decision Framework -->
+            <section>
+                <h2>Decision Framework</h2>
+                
+                <div class="decision-tree">
+                    <div class="decision-node">
+                        <div class="decision-number">1</div>
+                        <div class="decision-content">
+                            <div class="decision-question">Can it fit in the prompt? (&lt;8k tokens)</div>
+                            <div class="decision-answer">YES → Use prompt engineering. Stop.</div>
+                        </div>
+                        <div class="decision-outcome simple">SIMPLE</div>
+                    </div>
+                    
+                    <div class="decision-node">
+                        <div class="decision-number">2</div>
+                        <div class="decision-content">
+                            <div class="decision-question">Is the knowledge static?</div>
+                            <div class="decision-answer">YES → Consider fine-tuning</div>
+                        </div>
+                        <div class="decision-outcome simple">SIMPLE</div>
+                    </div>
+                    
+                    <div class="decision-node">
+                        <div class="decision-number">3</div>
+                        <div class="decision-content">
+                            <div class="decision-question">Does it change frequently?</div>
+                            <div class="decision-answer">YES → NOW you need RAG</div>
+                        </div>
+                        <div class="decision-outcome">RAG</div>
+                    </div>
+                </div>
+                <div class="slide-cta">
+                    Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                </div>
+            </section>
+
+            <!-- SLIDE 5: When to Actually Use RAG -->
+            <section>
+                <h2>When to Actually Use RAG</h2>
+                
+                <div class="when-to-use">
+                    <div class="use-case">
+                        <div class="use-case-icon">📚</div>
+                        <div class="use-case-content">
+                            <div class="use-case-text">
+                                Knowledge base is LARGE (&gt;100k tokens)
+                            </div>
+                            <div class="use-case-example">
+                                Example: Product documentation, legal corpus, research papers
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case">
+                        <div class="use-case-icon">🔄</div>
+                        <div class="use-case-content">
+                            <div class="use-case-text">
+                                Information changes FREQUENTLY
+                            </div>
+                            <div class="use-case-example">
+                                Example: News, pricing, inventory, policy updates
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="use-case">
+                        <div class="use-case-icon">🔌</div>
+                        <div class="use-case-content">
+                            <div class="use-case-text">
+                                Context must be EXTERNAL to model
+                            </div>
+                            <div class="use-case-example">
+                                Example: User-specific data, company-internal docs, compliance
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-cta">
+                        Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: CTA -->
+            <section>
+                <div class="cta-container">
+                    <div class="cta-principle">
+                        START SIMPLE.
+                        <span class="cta-highlight">ADD COMPLEXITY ONLY WHEN FORCED.</span>
+                    </div>
+                    
+                    <div class="cta-links">
+                        <div class="cta-card">
+                            <div class="cta-icon">📥</div>
+                            <div class="cta-label">Join Community</div>
+                            <div class="cta-url">community.nachiketh.in</div>
+                        </div>
+                        
+                        <div class="cta-card">
+                            <div class="cta-icon">🎓</div>
+                            <div class="cta-label">Learn Production Systems</div>
+                            <div class="cta-url">bootcamp.nachiketh.in</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-cta">
+                    Get <span>source code</span> and <span>production patterns</span> at: community.nachiketh.in
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            width: 1920,
+            height: 1080,
+            margin: 0.04,
+            transition: 'fade',
+            transitionSpeed: 'fast',
+            backgroundTransition: 'fade',
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            slideNumber: false
+        });
+    </script>
+</body>
+</html>

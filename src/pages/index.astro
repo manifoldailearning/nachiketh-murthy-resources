@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VideoCard from '../components/VideoCard.astro';
+import CTA from '../components/CTA.astro';
+import { getAllVideos, truncate } from '../lib/videos';
+
+const videos = getAllVideos(); // newest-first in helper
+
+const title = 'Manifold AI Learning — Video Resources';
+const description = truncate(
+  'Browse the newest Manifold AI Learning videos, with resources like PDFs, slides, code, and links. Search by title, description, or tags.',
+  160,
+);
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/" ogType="website">
+  <section class="controls" aria-label="Search videos">
+    <label class="controls__label" for="q">Search videos...</label>
+    <input
+      id="q"
+      class="controls__input"
+      type="search"
+      placeholder="Search videos..."
+      autocomplete="off"
+    />
+    <p class="controls__meta">
+      <span id="count">{videos.length}</span> videos
+    </p>
+    <p id="empty" class="controls__empty" hidden>No videos found.</p>
+  </section>
+
+  <section class="hero">
+    <h1 class="hero__title">Manifold AI Learning — Video Resources</h1>
+    <p class="hero__desc">
+      Search the library and open any video to see the YouTube embed and linked resources.
+    </p>
+  </section>
+
+  <section class="grid" aria-label="Video list" id="grid">
+    {videos.map((video) => (
+      <VideoCard video={video} />
+    ))}
+  </section>
+
+  <section class="ctaWrap" aria-label="Join">
+    <CTA variant="compact" />
+  </section>
+
+  <script type="module" define:vars={{ videos }}>
+    const input = document.getElementById('q');
+    const grid = document.getElementById('grid');
+    const count = document.getElementById('count');
+    const empty = document.getElementById('empty');
+
+    const cards = Array.from(grid.querySelectorAll('[data-slug]'));
+
+    const index = videos.map((v) => ({
+      slug: v.slug,
+      haystack: `${v.title} ${v.description} ${(v.tags || []).join(' ')}`.toLowerCase(),
+    }));
+
+    function showSlugs(slugs) {
+      let visible = 0;
+      for (const el of cards) {
+        const ok = slugs == null ? true : slugs.has(el.dataset.slug);
+        el.style.display = ok ? '' : 'none';
+        if (ok) visible++;
+      }
+      count.textContent = String(visible);
+      empty.hidden = visible !== 0;
+    }
+
+    function update() {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        showSlugs(null);
+        return;
+      }
+      const slugs = new Set(
+        index.filter((item) => item.haystack.includes(q)).map((item) => item.slug),
+      );
+      showSlugs(slugs);
+    }
+
+    input.addEventListener('input', update);
+    showSlugs(null);
+  </script>
+
+  <style>
+    .hero {
+      margin-bottom: 1.25rem;
+    }
+    .hero__title {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .hero__desc {
+      margin: 0.6rem 0 0 0;
+      color: var(--muted);
+      max-width: 75ch;
+    }
+    .controls {
+      margin-top: 1.2rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+      display: grid;
+      gap: 0.5rem;
+    }
+    .controls__label {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .controls__input {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      outline: none;
+    }
+    .controls__input:focus {
+      border-color: rgba(99, 102, 241, 0.55);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+    .controls__meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .controls__empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .grid {
+      margin-top: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .ctaWrap {
+      margin-top: 1.25rem;
+    }
+  </style>
+</BaseLayout>
+

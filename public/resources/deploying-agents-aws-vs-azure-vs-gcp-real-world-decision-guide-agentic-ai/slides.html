@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploying Agents: AWS vs Azure vs GCP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .slide-1 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+        .slide-2 { background: linear-gradient(135deg, #2d1b0e 0%, #1a0f05 100%); } /* AWS Orange - Dark */
+        .slide-3 { background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%); } /* Azure Blue - Dark */
+        .slide-4 { background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%); } /* GCP Colors - Dark */
+        .slide-5 { background: linear-gradient(135deg, #0d2818 0%, #1a3a2e 100%); }
+        .slide-6 { background: linear-gradient(135deg, #2d1b2e 0%, #1a0f1a 100%); }
+        .slide-7 { background: linear-gradient(135deg, #0d1b2a 0%, #1a0d1a 100%); }
+        .slide-8 { background: linear-gradient(135deg, #1a1a2e 0%, #2d1b2e 100%); }
+        .slide-9 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .cloud-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 50px;
+            margin: 20px 0;
+            max-width: 900px;
+            width: 100%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cloud-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .cloud-section {
+            margin: 25px 0;
+        }
+
+        .cloud-section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #4ade80;
+        }
+
+        .cloud-section-bad {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #f87171;
+        }
+
+        .cloud-list {
+            font-size: 1.4rem;
+            line-height: 2;
+            margin-left: 30px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px 0;
+        }
+
+        .cost-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cost-card-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .cost-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 3px solid rgba(255, 255, 255, 0.5);
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .decision-card {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin: 15px 0;
+            border-left: 5px solid #fbbf24;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .decision-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+
+        .decision-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .decision-detail {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .highlight-box {
+            background: rgba(255, 215, 0, 0.15);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin: 30px 0;
+            max-width: 850px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .insight-box {
+            background: rgba(50, 255, 50, 0.15);
+            border: 3px solid rgba(50, 255, 50, 0.5);
+            border-radius: 15px;
+            padding: 30px 40px;
+            margin: 30px 0;
+            max-width: 850px;
+            font-size: 1.6rem;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 50px 70px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .cta-text {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .slide-footer-cta {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 24px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 1.1rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .slide-footer-cta a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .slide-footer-cta a:hover {
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .slide-footer-cta {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        
+        <!-- SLIDE 1: Title -->
+        <div class="slide slide-1">
+            <h1 class="animate">Deploying Agents:<br>AWS vs Azure vs GCP</h1>
+            <div class="subtitle animate">Complete comparison for production deployment</div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: AWS -->
+        <div class="slide slide-2">
+            <h2 class="animate">AWS</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">✅ Strengths</div>
+                    <div class="cloud-list">
+                        • Most mature ecosystem<br>
+                        • Best documentation<br>
+                        • Lambda + Bedrock + DynamoDB<br>
+                        • Most Stack Overflow answers<br>
+                        • Widest model selection (Bedrock)
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 40px;">
+                    <div class="cloud-section-bad">❌ Weaknesses</div>
+                    <div class="cloud-list">
+                        • Pricing complexity<br>
+                        • Service naming inconsistent<br>
+                        • IAM permissions labyrinth
+                    </div>
+                </div>
+                <div class="highlight-box animate" style="margin-top: 40px;">
+                    <strong>Best For:</strong> Startups, general use, Claude access
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Azure -->
+        <div class="slide slide-3">
+            <h2 class="animate">Azure</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">✅ Strengths</div>
+                    <div class="cloud-list">
+                        • Best enterprise integration (AD)<br>
+                        • Exclusive OpenAI partnership<br>
+                        • Good compliance checkboxes<br>
+                        • Strong Windows support<br>
+                        • Enterprise agreement discounts
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 40px;">
+                    <div class="cloud-section-bad">❌ Weaknesses</div>
+                    <div class="cloud-list">
+                        • Service naming confusing<br>
+                        • Pricing unpredictable<br>
+                        • Documentation scattered
+                    </div>
+                </div>
+                <div class="highlight-box animate" style="margin-top: 40px;">
+                    <strong>Best For:</strong> Enterprises, Microsoft shops, OpenAI access
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: GCP -->
+        <div class="slide slide-4">
+            <h2 class="animate">GCP</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">✅ Strengths</div>
+                    <div class="cloud-list">
+                        • Cleanest APIs<br>
+                        • Fastest cold starts (100-500ms)<br>
+                        • Best ML infrastructure (Vertex AI)<br>
+                        • Native Gemini access<br>
+                        • Great for batch processing
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 40px;">
+                    <div class="cloud-section-bad">❌ Weaknesses</div>
+                    <div class="cloud-list">
+                        • Fewer enterprise features<br>
+                        • Smaller community<br>
+                        • Less mature than AWS
+                    </div>
+                </div>
+                <div class="highlight-box animate" style="margin-top: 40px;">
+                    <strong>Best For:</strong> ML-heavy workloads, Gemini users
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Cost Comparison -->
+        <div class="slide slide-5">
+            <h2 class="animate">Cost Comparison</h2>
+            <div class="subtitle animate">100,000 requests/month</div>
+            <div class="comparison-grid animate">
+                <div class="cost-card">
+                    <div class="cost-card-title" style="color: #FF9900;">AWS</div>
+                    <div class="cost-row">
+                        <span>Compute</span>
+                        <span>$33</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>LLM</span>
+                        <span>$1,050</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Vector DB</span>
+                        <span>$36</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Storage</span>
+                        <span>$3</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Monitoring</span>
+                        <span>$6</span>
+                    </div>
+                    <div class="cost-total">$1,127</div>
+                </div>
+                <div class="cost-card">
+                    <div class="cost-card-title" style="color: #0078D4;">Azure</div>
+                    <div class="cost-row">
+                        <span>Compute</span>
+                        <span>$32</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>LLM</span>
+                        <span>$750</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Vector DB</span>
+                        <span>$27</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Storage</span>
+                        <span>$22</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Monitoring</span>
+                        <span>$12</span>
+                    </div>
+                    <div class="cost-total">$843</div>
+                </div>
+                <div class="cost-card">
+                    <div class="cost-card-title" style="color: #4285F4;">GCP</div>
+                    <div class="cost-row">
+                        <span>Compute</span>
+                        <span>$48</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>LLM</span>
+                        <span>$1,050</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Vector DB</span>
+                        <span>$31</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Storage</span>
+                        <span>$6</span>
+                    </div>
+                    <div class="cost-row">
+                        <span>Monitoring</span>
+                        <span>$5</span>
+                    </div>
+                    <div class="cost-total">$1,140</div>
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Cost Insights -->
+        <div class="slide slide-6">
+            <h2 class="animate">Cost Insights</h2>
+            <div class="insight-box animate">
+                <strong style="font-size: 2rem;">Cost Difference: 25% Max</strong><br><br>
+                $843 (Azure) to $1,140 (GCP)
+            </div>
+            <div class="insight-box animate">
+                <strong style="font-size: 2rem;">LLM = 70-90% of Cost</strong><br><br>
+                Infrastructure only 10-30%
+            </div>
+            <div class="highlight-box animate">
+                Cloud choice matters less than token optimization
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Decision Framework -->
+        <div class="slide slide-7">
+            <h2 class="animate">Decision Framework</h2>
+            <div class="decision-card animate">
+                <div class="decision-number">Question 1</div>
+                <div class="decision-text">Where's your existing infrastructure?</div>
+                <div class="decision-detail">Stay there unless strong reason to migrate</div>
+            </div>
+            <div class="decision-card animate">
+                <div class="decision-number">Question 2</div>
+                <div class="decision-text">What's your team familiar with?</div>
+                <div class="decision-detail">Use what your team knows best</div>
+            </div>
+            <div class="decision-card animate">
+                <div class="decision-number">Question 3</div>
+                <div class="decision-text">What LLM do you need?</div>
+                <div class="decision-detail">Claude: AWS/GCP | OpenAI: Azure | Gemini: GCP</div>
+            </div>
+            <div class="decision-card animate">
+                <div class="decision-number">Question 4</div>
+                <div class="decision-text">What's your compliance requirement?</div>
+                <div class="decision-detail">Azure = easiest enterprise | AWS = most certs</div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 7B: Use Cases -->
+        <div class="slide slide-5">
+            <h2 class="animate">Real-World Use Cases</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">Early-Stage Startup</div>
+                    <div class="cloud-list">
+                        • 3–5 engineers, limited budget, need to ship fast<br>
+                        • Using Claude as primary LLM<br>
+                        • <strong>Go-To:</strong> AWS (Lambda + DynamoDB + S3 + Bedrock)<br>
+                        • Typical cost at 10K requests/month: ≈ $120 (mostly LLM)
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 30px;">
+                    <div class="cloud-section-title">Enterprise Company</div>
+                    <div class="cloud-list">
+                        • Existing Azure infrastructure + Active Directory<br>
+                        • Strong compliance needs (SOC 2, HIPAA, etc.)<br>
+                        • <strong>Go-To:</strong> Azure (Functions + Cosmos DB + Azure OpenAI)<br>
+                        • At 1M requests/month: ≈ $8,500 (often 20% off with EA)
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 30px;">
+                    <div class="cloud-section-title">ML-Heavy System</div>
+                    <div class="cloud-list">
+                        • Custom model fine-tuning + large-scale embeddings<br>
+                        • Heavy batch processing, Gemini-first strategy<br>
+                        • <strong>Go-To:</strong> GCP (Cloud Run + Vertex AI + Vector Search + BigQuery)<br>
+                        • At 500K requests/month: ≈ $5,200
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: When NOT to Migrate -->
+        <div class="slide slide-8">
+            <h2 class="animate">Don't Migrate Unless...</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">✅ Migrate If:</div>
+                    <div class="cloud-list">
+                        • Saving >30% on $50K+/month spend<br>
+                        • LLM requirements force it<br>
+                        • Acquisition/merger (no choice)
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 40px;">
+                    <div class="cloud-section-bad">❌ Don't Migrate If:</div>
+                    <div class="cloud-list">
+                        • Marginal 10-15% savings<br>
+                        • "Better" features (theoretical)<br>
+                        • Resume building
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box animate" style="margin-top: 40px;">
+                Migration costs: $30-50K in engineering time<br>
+                Plus 6-9 months of work
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 8B: Migration Strategy -->
+        <div class="slide slide-6">
+            <h2 class="animate">If You Must Migrate</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">Phased Migration Plan</div>
+                    <div class="cloud-list">
+                        • Phase 1 (Months 1–2): Ship <strong>new features</strong> on the new cloud only<br>
+                        • Phase 2 (Month 3): Move <strong>background jobs</strong> and batch workloads<br>
+                        • Phase 3 (Months 4–5): Migrate <strong>read-heavy endpoints</strong> (search, dashboards)<br>
+                        • Phase 4 (Month 6): Carefully move <strong>write endpoints</strong> with state sync<br>
+                        • Phase 5 (Months 7–8): Shift <strong>core agent execution</strong>, keep old cloud on standby<br>
+                        • Phase 6 (Month 9): Monitor, then <strong>decommission old infra</strong>
+                    </div>
+                </div>
+                <div class="highlight-box animate" style="margin-top: 30px;">
+                    Expect 6–9 months of work and $30–50K in engineering time<br>
+                    Only worth it with a <strong>clear, hard business reason</strong>
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 8C: Multi-Cloud Reality -->
+        <div class="slide slide-7">
+            <h2 class="animate">Multi-Cloud: Theory vs Reality</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">When It Makes Sense</div>
+                    <div class="cloud-list">
+                        • Different <strong>products</strong> live on different clouds, with dedicated teams<br>
+                        • <strong>Compliance</strong>: e.g., EU data on Azure EU, US data on AWS US<br>
+                        • Very high LLM spend (>$100K/month) for <strong>LLM arbitrage</strong> across providers
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 30px;">
+                    <div class="cloud-section-bad">Operational Reality</div>
+                    <div class="cloud-list">
+                        • Need expertise in 3 platforms, 3 security models, 3 billings<br>
+                        • Separate monitoring, cross-cloud networking, more failure modes<br>
+                        • Adds roughly <strong>20–30% operational overhead</strong>
+                    </div>
+                </div>
+                <div class="highlight-box animate" style="margin-top: 30px;">
+                    Most teams (&lt;50 engineers, &lt;$10K/month LLM spend) should stay <strong>single-cloud</strong>
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 8D: Closing Summary -->
+        <div class="slide slide-8">
+            <h2 class="animate">Closing Summary</h2>
+            <div class="cloud-card animate">
+                <div class="cloud-section">
+                    <div class="cloud-section-title">80% the Same, 20% Different</div>
+                    <div class="cloud-list">
+                        • All three have serverless compute, managed DBs, object storage, LLMs, monitoring<br>
+                        • Differences are mostly in <strong>APIs, pricing models, and enterprise features</strong><br>
+                        • Your constraints (infra, team, LLM, compliance, geography) should drive the choice
+                    </div>
+                </div>
+                <div class="cloud-section" style="margin-top: 30px;">
+                    <div class="cloud-section-title">Do vs Don't</div>
+                    <div class="cloud-list">
+                        • <strong>Do:</strong> Pick one cloud, optimize inside it, and focus on shipping<br>
+                        • <strong>Don't:</strong> Migrate for marginal gains or chase clouds for resume points<br>
+                        • Treat cloud choice as a <strong>constraint problem</strong>, not a religion
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: CTA -->
+        <div class="slide slide-9">
+            <h2 class="animate">Deploy to All Three</h2>
+            <div class="cta-box animate">
+                <div class="cta-title">🚀 Agentic AI Enterprise Bootcamp</div>
+                <div class="cta-text">
+                    We deploy to AWS, Azure, AND GCP<br>
+                    Because production engineers work with what their company uses
+                </div>
+                <div style="font-size: 1.6rem; margin: 25px 0; color: rgba(255, 255, 255, 0.9);">
+                    <strong>What You'll Learn:</strong><br>
+                    • Production deployment patterns<br>
+                    • Cost optimization strategies
+                </div>
+                <div style="font-size: 1.8rem; font-weight: 900; margin: 25px 0; color: #667eea;">
+                    Next Cohort: February 15, 2025
+                </div>
+                <a href="#" class="cta-button">Enroll Now</a>
+                <div style="margin-top: 20px; font-size: 1.1rem; color: rgba(255, 255, 255, 0.6);">
+                    For senior engineers with 3+ years experience
+                </div>
+            </div>
+            <div class="highlight-box animate" style="margin-top: 40px; background: rgba(255, 255, 255, 0.1);">
+                Choose based on YOUR constraints.<br>
+                Not marketing hype.
+            </div>
+            <div class="slide-footer-cta animate">
+                Get Free Production patterns & Tips : <a href="https://community.nachiketh.in" target="_blank">https://community.nachiketh.in</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.animate').forEach((el, index) => {
+                        setTimeout(() => {
+                            el.style.animation = `fadeInUp 0.8s ease-out forwards`;
+                        }, index * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+    </script>
+</body>
+</html>

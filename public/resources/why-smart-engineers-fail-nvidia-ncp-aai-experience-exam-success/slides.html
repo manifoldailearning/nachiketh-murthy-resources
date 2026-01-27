@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Smart Engineers Fail NCP-AAI - Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 60px 40px;
+            scroll-snap-align: start;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(118, 185, 0, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+
+        .title-slide h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #76b900 0%, #9ee000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .fail-stat {
+            font-size: 6rem;
+            font-weight: 900;
+            color: #ff4444;
+            text-align: center;
+            margin: 40px 0;
+            text-shadow: 0 0 30px rgba(255, 68, 68, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            text-align: center;
+            color: #cccccc;
+            margin-top: 20px;
+            max-width: 800px;
+        }
+
+        /* Failure Pattern Slides */
+        .failure-slide {
+            background: linear-gradient(135deg, #2d1a1a 0%, #3d2d2d 100%);
+        }
+
+        .failure-number {
+            font-size: 8rem;
+            font-weight: 900;
+            color: rgba(255, 68, 68, 0.2);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .failure-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .failure-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff4444;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .problem-box {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 4px solid #ff4444;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .problem-box h3 {
+            color: #ff4444;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .problem-box p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        .example-question {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(118, 185, 0, 0.3);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .example-question h4 {
+            color: #76b900;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .example-question .question-text {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .example-question .options {
+            margin: 15px 0;
+        }
+
+        .example-question .option {
+            padding: 6px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
+        .example-question .option::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            border: 2px solid #76b900;
+            border-radius: 3px;
+        }
+
+        .example-question .answer {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(118, 185, 0, 0.2);
+            border-left: 4px solid #76b900;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #76b900;
+        }
+
+        .example-question .why {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #cccccc;
+            font-style: italic;
+        }
+
+        .solution-box {
+            background: rgba(118, 185, 0, 0.1);
+            border-left: 4px solid #76b900;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .solution-box h3 {
+            color: #76b900;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .solution-box p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        /* Math Slide */
+        .math-slide {
+            background: linear-gradient(135deg, #1a2d1a 0%, #2d3d2d 100%);
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 40px;
+        }
+
+        .comparison-card {
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .without {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid #ff4444;
+        }
+
+        .with {
+            background: rgba(118, 185, 0, 0.1);
+            border: 2px solid #76b900;
+        }
+
+        .comparison-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .without h3 { color: #ff4444; }
+        .with h3 { color: #76b900; }
+
+        .comparison-card .cost {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .without .cost { color: #ff4444; }
+        .with .cost { color: #76b900; }
+
+        .comparison-card ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .comparison-card li {
+            font-size: 1.1rem;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .without li::before {
+            content: '❌';
+            position: absolute;
+            left: 0;
+        }
+
+        .with li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Solution Slide */
+        .solution-slide {
+            background: linear-gradient(135deg, #1a2d1a 0%, #2d4d2d 100%);
+        }
+
+        .package-title {
+            font-size: 3rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #76b900;
+        }
+
+        .package-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(118, 185, 0, 0.1);
+            border: 2px solid #76b900;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            color: #76b900;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* CTA Slide */
+        .cta-slide {
+            background: linear-gradient(135deg, #76b900 0%, #9ee000 100%);
+            color: #000000;
+        }
+
+        .cta-slide h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cta-slide h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #000000;
+            color: #76b900;
+            padding: 25px 60px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        .cta-button:hover {
+            background: #1a1a1a;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-cta {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #cccccc;
+            text-align: center;
+        }
+
+        .slide-cta a {
+            color: #76b900;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .slide-cta a:hover {
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        .nav-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .arrow-down {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .title-slide h1 { font-size: 2.5rem; }
+            .fail-stat { font-size: 4rem; }
+            .subtitle { font-size: 1.2rem; }
+            .failure-title { font-size: 1.8rem; }
+            .comparison { grid-template-columns: 1fr; }
+            .package-features { grid-template-columns: 1fr; }
+            .cta-slide h1 { font-size: 2.5rem; }
+            .example-question { font-size: 0.85rem; padding: 15px; }
+            .example-question .question-text { font-size: 0.9rem; }
+            .example-question h4 { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide title-slide">
+        <h1>Why Smart Engineers<br>Still Fail NCP-AAI</h1>
+        <div class="fail-stat">35-40%</div>
+        <p class="subtitle">Fail Rate • 7 Reasons • All Avoidable</p>
+        <div class="slide-cta">
+            Get NVIDIA Prep Pack at:
+            <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+        </div>
+    </div>
+
+    <!-- Slide 2: Failure #1 - Theory Not Implementation -->
+    <div class="slide failure-slide">
+        <div class="failure-number">1</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #1: Study Definitions, Not Implementation</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>Engineers learn "ReAct is Reasoning + Acting"</p>
+                <p>Exam asks: "When to use ReAct vs Plan-Execute in scenario X?"</p>
+                <p><strong>The exam doesn't test definitions. It tests IMPLEMENTATION knowledge.</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Question 1:</h4>
+                <div class="question-text">"An agent enters an infinite loop repeatedly calling the same tool. The tool returns valid data each time. What's the most likely cause?"</div>
+                <div class="options">
+                    <div class="option">A) Tool is malfunctioning</div>
+                    <div class="option">B) LLM is hallucinating the tool name</div>
+                    <div class="option">C) Max iterations not configured</div>
+                    <div class="option">D) Context window too small</div>
+                </div>
+                <div class="answer">✅ Answer: C (Max iterations not configured)</div>
+                <div class="why">If you only know the definition of ReAct, you're guessing. This tests IMPLEMENTATION knowledge.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example Question 2:</h4>
+                <div class="question-text">"When should you use a circuit breaker pattern vs retry with exponential backoff for tool error handling?"</div>
+                <div class="answer">This isn't "What is circuit breaker?" This is "When do you use X vs Y in production?"</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: 5 Mock Exams with implementation questions</p>
+                <p>Not "What is X?" but "When would you use X in scenario Y?"</p>
+                <p>Detailed Videos explaining production patterns</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Failure #2 - NVIDIA Platform -->
+    <div class="slide failure-slide">
+        <div class="failure-number">2</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #2: Skip NVIDIA Platform (7%)</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>"Only 7%, I'll skip it" = Miss 5 questions = -6% score</p>
+                <p>Tools you've never used: NeMo Guardrails, NIM, TensorRT, Triton</p>
+                <p><strong>At 68%, you fail (need 70%)</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Question 1:</h4>
+                <div class="question-text">"You need PII detection and GDPR compliance guardrails. Which NVIDIA tool?"</div>
+                <div class="options">
+                    <div class="option">A) NeMo Agent Toolkit</div>
+                    <div class="option">B) NeMo Guardrails</div>
+                    <div class="option">C) TensorRT-LLM</div>
+                    <div class="option">D) Triton</div>
+                </div>
+                <div class="answer">✅ Answer: B (NeMo Guardrails)</div>
+                <div class="why">If you've never used NeMo Guardrails, you're guessing.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example Question 2:</h4>
+                <div class="question-text">"Which handles dynamic batching and multi-model serving at scale?"</div>
+                <div class="options">
+                    <div class="option">A) NeMo Guardrails</div>
+                    <div class="option">B) NIM</div>
+                    <div class="option">C) Triton Inference Server</div>
+                    <div class="option">D) TensorRT-LLM</div>
+                </div>
+                <div class="answer">✅ Answer: C (Triton Inference Server)</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: Mock Exams with NVIDIA platform questions</p>
+                <p>Videos on each NVIDIA tool: What it does, when to use it, how to implement</p>
+                <p>Ebook chapter on NVIDIA platform with tool comparison</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Failure #3 - Orchestration -->
+    <div class="slide failure-slide">
+        <div class="failure-number">3</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #3: Shallow Orchestration Knowledge</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>Build simple single-agent workflows</p>
+                <p>Exam tests: Stateful orchestration, Multi-agent coordination, Memory mechanisms</p>
+                <p><strong>Orchestration = 20-25% of exam (14-17 questions)</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Question 1:</h4>
+                <div class="question-text">"You need recovery from failures in a long-running multi-agent workflow. Which approach enables checkpointing and resuming from last successful state?"</div>
+                <div class="options">
+                    <div class="option">A) Store all state in database after each step</div>
+                    <div class="option">B) Use session management with state snapshots</div>
+                    <div class="option">C) Retry entire workflow from beginning</div>
+                    <div class="option">D) Log all actions and replay manually</div>
+                </div>
+                <div class="answer">✅ Answer: B (Session management with state snapshots)</div>
+                <div class="why">If you haven't implemented production checkpointing, you don't know this.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example Question 2:</h4>
+                <div class="question-text">"How do you enable human approval before high-risk agent actions in production?"</div>
+                <div class="options">
+                    <div class="option">A) Send email notification and wait for response</div>
+                    <div class="option">B) Implement interrupt pattern with approval gate</div>
+                    <div class="option">C) Log action and allow rollback</div>
+                    <div class="option">D) Run in dry-run mode first</div>
+                </div>
+                <div class="answer">✅ Answer: B (Interrupt pattern with approval gate)</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: 15-20 orchestration questions per mock</p>
+                <p>Videos explaining advanced patterns: checkpointing, human-in-the-loop, multi-agent communication</p>
+                <p>Ebook with orchestration chapter: all patterns explained with architecture diagrams</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Failure #4 - Time Management -->
+    <div class="slide failure-slide">
+        <div class="failure-number">4</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #4: Poor Time Management</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>60-70 questions in 120 minutes = ~1.7-2 minutes per question</p>
+                <p>Easy (30%): 30 sec | Medium (50%): 2 min | Hard (20%): 3-4 min</p>
+                <p><strong>If you spend 3 minutes on easy questions, you fail.</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Time Trap:</h4>
+                <div class="question-text">"An agent system experiences intermittent 503 errors from an external API during high load. You need error handling that prevents overwhelming the API while maintaining system responsiveness. Consider the following approaches: [Long scenario with 4 detailed options]..."</div>
+                <div class="answer">⏱️ This takes 3-4 minutes to analyze</div>
+                <div class="why">If you spend 4 minutes on 15 hard questions, that's 60 minutes. You have 60 minutes left for 55 questions. You're behind.</div>
+            </div>
+
+            <div class="problem-box">
+                <h3>❌ The Reality</h3>
+                <p>Question 50. 20 minutes left. 20 questions remaining.</p>
+                <p><strong>They rush. They fail.</strong></p>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: 5 Timed Mock Exams (120 minutes each)</p>
+                <p>Strategy in videos: How to identify easy questions (30 sec), skip and come back to hard questions</p>
+                <p>Learn your pacing before exam day</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Failure #5 - Error Handling -->
+    <div class="slide failure-slide">
+        <div class="failure-number">5</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #5: Weak Error Handling Patterns</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>Engineers write basic try-catch blocks</p>
+                <p>Know what circuit breaker is, but don't know WHEN to use it vs retry logic</p>
+                <p><strong>Production pattern knowledge = 5-10% of exam</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Question 1:</h4>
+                <div class="question-text">"Your agent calls a rate-limited API that returns 429 errors. Which strategy?"</div>
+                <div class="options">
+                    <div class="option">A) Circuit breaker with fast failure</div>
+                    <div class="option">B) Retry with exponential backoff</div>
+                    <div class="option">C) Timeout with aggressive threshold</div>
+                    <div class="option">D) Fallback to cached responses</div>
+                </div>
+                <div class="answer">✅ Answer: B (Retry with exponential backoff)</div>
+                <div class="why">Rate limiting = temporary failure. Exponential backoff respects API limits. Circuit breaker is for persistent failures.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example Question 2:</h4>
+                <div class="question-text">"A critical service has a 10% persistent failure rate. Your agent depends on it. Prevent cascading failures?"</div>
+                <div class="options">
+                    <div class="option">A) Retry with fixed delay</div>
+                    <div class="option">B) Timeout with quick failure</div>
+                    <div class="option">C) Circuit breaker with health checks and half-open state</div>
+                    <div class="option">D) Fallback to degraded mode</div>
+                </div>
+                <div class="answer">✅ Answer: C (Circuit breaker)</div>
+                <div class="why">10% persistent failure = circuit breaker territory. Half-open state allows recovery testing. Prevents overwhelming failing service.</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: 8-10 error handling questions per mock</p>
+                <p>Videos explaining each pattern: When to use X vs Y, why this answer not that answer</p>
+                <p>Ebook with error handling chapter: All patterns explained with decision flowcharts</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Failure #6 - Low-Weight Topics -->
+    <div class="slide failure-slide">
+        <div class="failure-number">6</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #6: Ignore "Only 5%" Topics</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>Deployment (5%) + Safety (5%) + Human (5%) = 15% = 10 questions</p>
+                <p><strong>If you skip these, you need 42 correct from remaining 60 = 70% on HARD topics</strong></p>
+                <p><strong>If you study these too, you need 42 from all 70 = 60% overall (easier!)</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example from Deployment (5%):</h4>
+                <div class="question-text">"When deploying multi-agent systems at production scale using containerization, which component handles service discovery?"</div>
+                <div class="options">
+                    <div class="option">A) Ingress controller</div>
+                    <div class="option">B) Service mesh</div>
+                    <div class="option">C) Load balancer</div>
+                    <div class="option">D) Pod scheduler</div>
+                </div>
+                <div class="answer">✅ Answer: B (Service mesh)</div>
+                <div class="why">This is EASY if you know basic Kubernetes.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example from Safety (5%):</h4>
+                <div class="question-text">"Which regulation requires explainability mechanisms for AI systems affecting EU citizens?"</div>
+                <div class="options">
+                    <div class="option">A) GDPR</div>
+                    <div class="option">B) EU AI Act</div>
+                    <div class="option">C) CCPA</div>
+                    <div class="option">D) HIPAA</div>
+                </div>
+                <div class="answer">✅ Answer: B (EU AI Act)</div>
+                <div class="why">Easy if you've read the study guide.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example from Human Interaction (5%):</h4>
+                <div class="question-text">"When implementing transparency mechanisms for agent decision-making, which approach provides the most accountability?"</div>
+                <div class="options">
+                    <div class="option">A) Log all LLM prompts</div>
+                    <div class="option">B) Decision traceability with reasoning chains</div>
+                    <div class="option">C) Store all agent actions</div>
+                    <div class="option">D) User feedback collection</div>
+                </div>
+                <div class="answer">✅ Answer: B (Decision traceability with reasoning chains)</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: Mock Exams covering all 10 domains with balanced distribution</p>
+                <p>Videos on every domain (yes, even 5% topics)</p>
+                <p>Ebook with all 10 domains - don't give away free points</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Failure #7 - No Hands-On -->
+    <div class="slide failure-slide">
+        <div class="failure-number">7</div>
+        <div class="failure-content">
+            <h2 class="failure-title">FAILURE #7: Read Docs, Don't Build</h2>
+            <div class="problem-box">
+                <h3>❌ The Mistake</h3>
+                <p>Engineers study by reading: NVIDIA NeMo docs, ReAct papers, RAG guides</p>
+                <p>They don't build. The exam tests IMPLEMENTATION.</p>
+                <p><strong>Reading ≠ Building</strong></p>
+            </div>
+            
+            <div class="example-question">
+                <h4>📋 Example Question 1:</h4>
+                <div class="question-text">"Your RAG system retrieves chunks with mixed relevance scores. Which approach improves result quality?"</div>
+                <div class="options">
+                    <div class="option">A) Increase number of retrieved chunks</div>
+                    <div class="option">B) Implement reranking after retrieval</div>
+                    <div class="option">C) Use larger embedding model</div>
+                    <div class="option">D) Decrease chunk size</div>
+                </div>
+                <div class="answer">✅ Answer: B (Reranking)</div>
+                <div class="why">If you've built RAG systems in production, you know this. If you've only read about RAG, you might guess A or C.</div>
+            </div>
+
+            <div class="example-question">
+                <h4>📋 Example Question 2:</h4>
+                <div class="question-text">"Agent memory grows unbounded across conversations. Which pattern prevents this while maintaining context?"</div>
+                <div class="options">
+                    <div class="option">A) Increase context window to 128K tokens</div>
+                    <div class="option">B) Use larger model with more capacity</div>
+                    <div class="option">C) Sliding window with periodic summarization</div>
+                    <div class="option">D) Store everything in vector database</div>
+                </div>
+                <div class="answer">✅ Answer: C (Sliding window with summarization)</div>
+                <div class="why">If you've hit token limits in production, you know this. If you've only read theory, you might guess A.</div>
+            </div>
+
+            <div class="solution-box">
+                <h3>✅ The Solution</h3>
+                <p>Prep package: Implementation questions test if you've built</p>
+                <p>Production scenarios: "What would you do" not "What is"</p>
+                <p>If you can answer my mock exams, you're ready. If you can't, you need to build more.</p>
+            </div>
+            <div class="slide-cta">
+                Get NVIDIA Prep Pack at:
+                <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: The Math -->
+    <div class="slide math-slide">
+        <h1 style="font-size: 3rem; margin-bottom: 40px; text-align: center;">The Math Is Simple</h1>
+        <div class="comparison">
+            <div class="comparison-card without">
+                <h3>WITHOUT Prep Package</h3>
+                <div class="cost">$400</div>
+                <ul>
+                    <li>Study blindly</li>
+                    <li>Miss NVIDIA platform</li>
+                    <li>Weak on LangGraph</li>
+                    <li>Skip low-weight topics</li>
+                    <li>No time management practice</li>
+                    <li>35-40% fail rate</li>
+                    <li>Retake exam ($200 more)</li>
+                    <li>3+ months wasted</li>
+                </ul>
+            </div>
+            <div class="comparison-card with">
+                <h3>WITH Prep Package</h3>
+                <div class="cost">Pass 1st Try</div>
+                <ul>
+                    <li>Know you're ready</li>
+                    <li>Master NVIDIA platform</li>
+                    <li>Deep LangGraph knowledge</li>
+                    <li>All 10 domains covered</li>
+                    <li>5 timed practice exams</li>
+                    <li>85-90% pass rate</li>
+                    <li>Certified in 6 weeks</li>
+                    <li>Save time & money</li>
+                </ul>
+            </div>
+        </div>
+        <div class="slide-cta">
+            Get NVIDIA Prep Pack at:
+            <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+        </div>
+    </div>
+
+    <!-- Slide 10: The Solution -->
+    <div class="slide solution-slide">
+        <h1 class="package-title">The Complete Prep Package</h1>
+        <div class="package-features">
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>5 Full Mock Exams</h3>
+                <p>350 questions total</p>
+                <p>Timed (120 minutes)</p>
+                <p>All 10 domains</p>
+                <p>Implementation-focused</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎥</div>
+                <h3>10+ Hours Videos</h3>
+                <p>Answer explanations</p>
+                <p>Pattern walkthroughs</p>
+                <p>NVIDIA platform tutorials</p>
+                <p>When to use X vs Y</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>200+ Page Ebook</h3>
+                <p>All 10 domains</p>
+                <p>Decision flowcharts</p>
+                <p>Implementation examples</p>
+                <p>Study strategy guide</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 60px;">
+            <p style="font-size: 1.8rem; color: #76b900; font-weight: 700;">
+                If you score 75%+ on all 5 mocks, you're ready for the real exam
+            </p>
+        </div>
+        <div class="slide-cta">
+            Get NVIDIA Prep Pack at:
+            <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+        </div>
+    </div>
+
+    <!-- Slide 11: CTA -->
+    <div class="slide cta-slide">
+        <h1>Don't Be in the 35%<br>Who Fail</h1>
+        <h2>Pass NCP-AAI on Your First Attempt</h2>
+        <a href="https://learn.manifoldailearning.com/services/nvidiancpaai" class="cta-button">GET PREP PACKAGE</a>
+        <div style="margin-top: 40px; text-align: center;">
+            <p style="font-size: 1.4rem; font-weight: 600;">
+                5 Mock Exams + 10+ Hours Videos + 200+ Page Ebook
+            </p>
+            <p style="font-size: 1.2rem; margin-top: 20px;">
+                Know you're ready. Pass first time. Get certified.
+            </p>
+        </div>
+        <div class="slide-cta">
+            Get NVIDIA Prep Pack at:
+            <a href="https://learn.manifoldailearning.com/services/nvidiancpaai">learn.manifoldailearning.com/services/nvidiancpaai</a>
+        </div>
+    </div>
+
+    <div class="nav-hint">
+        <div class="arrow-down">↓</div>
+        <div>Scroll to navigate</div>
+    </div>
+</body>
+</html>

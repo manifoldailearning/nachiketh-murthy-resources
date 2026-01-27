@@ -1,0 +1,219 @@
+---
+import { SITE } from '../config/site';
+
+type Props = {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  ogType?: 'website' | 'article';
+};
+
+const SITE_NAME = 'Manifold AI Learning';
+const { title, description, canonicalPath, ogType = 'website' } = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL;
+const basePrefix = base === '/' ? '' : base.replace(/\/$/, '');
+const internalHref = (path: string) => `${basePrefix}${path}`;
+
+const normalized = canonicalPath.endsWith('/') ? canonicalPath : `${canonicalPath}/`;
+const canonical = `${SITE.fullBaseUrl}${normalized}`;
+
+const nav = [
+  { label: 'Home', href: internalHref('/'), external: false },
+  { label: 'About', href: internalHref('/about/'), external: false },
+  { label: 'Bootcamp', href: 'https://bootcamp.nachiketh.in', external: true },
+] as const;
+
+const footerLinks = [
+  { label: 'About', href: internalHref('/about/'), external: false },
+  { label: 'YouTube', href: 'https://www.youtube.com', external: true },
+  { label: 'Bootcamp', href: 'https://bootcamp.nachiketh.in', external: true },
+  { label: 'Community', href: 'https://community.nachiketh.in', external: true },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+
+    <meta name="twitter:card" content="summary" />
+
+    <style>
+      :root {
+        --bg: #0b1220;
+        --panel: rgba(255, 255, 255, 0.02);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.68);
+        --border: rgba(255, 255, 255, 0.10);
+        --max: 980px;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          'Apple Color Emoji', 'Segoe UI Emoji';
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+      }
+      .container {
+        max-width: var(--max);
+        margin: 0 auto;
+        padding: 1.5rem 1rem 2.5rem;
+      }
+
+      /* Header */
+      .siteHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--panel);
+        margin-bottom: 1.25rem;
+      }
+      .logoLink {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+        font-weight: 750;
+        letter-spacing: -0.01em;
+      }
+      .logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        object-fit: contain;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        text-decoration: none;
+        padding: 0.45rem 0.65rem;
+        border-radius: 10px;
+        color: var(--muted);
+      }
+      .nav a:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      /* Footer */
+      .siteFooter {
+        margin-top: 2.25rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .footerLinks {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .footerLinks a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .footerLinks a:hover {
+        color: var(--text);
+        text-decoration: underline;
+      }
+
+      @media (max-width: 640px) {
+        .siteHeader {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .nav {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="siteHeader">
+        <a class="logoLink" href={internalHref('/')}>
+          <img
+            class="logo"
+            src={`${basePrefix}/logo.png`}
+            alt="Manifold AI Learning Logo"
+            width="34"
+            height="34"
+          />
+          <span>{SITE_NAME}</span>
+        </a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          {nav.map((item) => (
+            <a
+              href={item.href}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener noreferrer' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="siteFooter">
+        <span>© Manifold AI Learning</span>
+        <ul class="footerLinks" aria-label="Footer links">
+          {footerLinks.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </footer>
+    </div>
+  </body>
+</html>
+

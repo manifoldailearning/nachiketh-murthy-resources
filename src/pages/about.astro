@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { truncate } from '../lib/videos';
+
+const title = 'About Nachiketh Murthy — Manifold AI Learning';
+const description = truncate(
+  'Nachiketh Murthy builds production-grade AI systems and teaches Agentic AI, MLOps, and enterprise AI—helping engineers turn theory into real-world systems.',
+  160,
+);
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/about/" ogType="website">
+  <section class="about">
+    <header class="about__header">
+      <h1 class="about__title">About Nachiketh Murthy</h1>
+      <p class="about__subtitle">Founder, Manifold AI Learning</p>
+    </header>
+
+    <div class="about__body">
+      <p>
+        I work on building production-grade AI systems—where model quality is only one part of the
+        job. The real work is designing reliable data and evaluation loops, handling drift, shipping
+        safe deployments, and integrating AI into real product constraints.
+      </p>
+      <p>
+        I teach Agentic AI, MLOps, and enterprise AI with an emphasis on engineering fundamentals:
+        observability, cost and latency, failure modes, and maintainable architectures that teams can
+        operate over time.
+      </p>
+      <p>
+        Manifold AI Learning is where I share what I learn—through YouTube education and hands-on
+        bootcamps—so engineers can move from theory to real-world systems with confidence.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .about__header {
+      margin-bottom: 1rem;
+    }
+    .about__title {
+      margin: 0 0 0.5rem 0;
+      font-size: clamp(1.5rem, 2.6vw, 2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    .about__subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .about__body {
+      display: grid;
+      gap: 0.85rem;
+      max-width: 80ch;
+    }
+    .about__body p {
+      margin: 0;
+      color: var(--muted);
+    }
+  </style>
+</BaseLayout>
+

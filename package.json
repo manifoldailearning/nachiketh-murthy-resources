@@ -1,0 +1,21 @@
+{
+  "name": "nachiketh-murthy-resources",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "add-video": "node scripts/add-video.mjs",
+    "ingest": "node scripts/ingest-new-video.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.58.0",
+    "fuse.js": "latest"
+  },
+  "devDependencies": {
+    "astro": "latest",
+    "marked": "^17.0.1",
+    "playwright": "latest"
+  }
+}

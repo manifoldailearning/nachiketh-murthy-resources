@@ -1,0 +1,68 @@
+[
+  {
+    "title": "Deploying Agents: AWS vs Azure vs GCP (Real-World Decision Guide) Agentic AI",
+    "slug": "deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai",
+    "youtubeId": "Wx_LAHdZ2P0",
+    "date": "2026-01-27",
+    "description": "Which cloud should you use for deploying agents? I get this question every week. The answer: It depends less on the clouds and more on your constraints. **Complete comparison:** 🔹 **AWS** - Strengths: Most mature, best docs, Lambda + Bedrock - Weaknesses: Pricing complexity - Cost: $1,127/month (100K requests) - Best for: Startups, general use 🔹 **Azure** - Strengths: Enterprise integration, OpenAI exclusive - Weaknesses: Service naming",
+    "descriptionFile": "/resources/deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai/description.md",
+    "tags": [
+      "deployments",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/deploying-agents-aws-vs-azure-vs-gcp-real-world-decision-guide-agentic-ai/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Join Bootcamp, Be Future Ready",
+      "url": "https://bootcamp.nachiketh.in"
+    }
+  },
+  {
+    "title": "Why Smart Engineers Fail NVIDIA NCP-AAI (Experience ≠ Exam Success)",
+    "slug": "why-smart-engineers-fail-nvidia-ncp-aai-experience-exam-success",
+    "youtubeId": "LHIdy9f0g0I",
+    "date": "2026-01-27",
+    "description": "**Smart engineers don’t fail because they lack skill. They fail because exams test specific patterns — not experience.** ## What you’ll learn - Why NVIDIA platform questions silently cost 7–10% - Why LangGraph implementation knowledge matters - The 5 repeat mistakes that cause a 65% score 👉 **[Explore the NVIDIA NCP-AAI Prep Pack](https://learn.manifoldailearning.com/services/nvidiancpaai?utm_source=youtube&utm_campaign=nvidia-failures)**",
+    "descriptionFile": "/resources/why-smart-engineers-fail-nvidia-ncp-aai-experience-exam-success/description.md",
+    "tags": [
+      "nvidia-ncpaai",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/why-smart-engineers-fail-nvidia-ncp-aai-experience-exam-success/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/why-smart-engineers-fail-nvidia-ncp-aai-experience-exam-success/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/why-smart-engineers-fail-nvidia-ncp-aai-experience-exam-success/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "get nvidia prep pack",
+      "url": "https://learn.manifoldailearning.com/services/nvidiancpaai"
+    }
+  }
+]

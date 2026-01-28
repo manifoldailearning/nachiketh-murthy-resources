@@ -27,7 +27,7 @@
         "url": "/resources/your-agent-memory-architecture-is-costing-you-5-600-month/description.txt"
       },
       {
-        "label": "Description",
+        "label": "Source Code",
         "type": "code",
         "url": "/resources/your-agent-memory-architecture-is-costing-you-5-600-month/demo.py"
       }

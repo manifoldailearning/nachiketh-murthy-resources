@@ -1,1 +1,1 @@
-nvidia-ncpaai,agentic-ai
+deployment,agentic-ai

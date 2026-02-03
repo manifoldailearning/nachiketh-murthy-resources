@@ -63,7 +63,6 @@ Senior backend engineers
 
 Teams deploying agentic systems to real users
 
-Soft, Non-Pushy CTA (end of description)
 
 If you’re serious about shipping production-grade agent systems,
 we cover the full implementation (architecture, observability, deployment, and operations) in the Agentic AI Bootcamp.

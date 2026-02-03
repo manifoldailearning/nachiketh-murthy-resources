@@ -1,5 +1,38 @@
 [
   {
+    "title": "POC ≠ Production: What Makes an Agent System Truly Production-Ready",
+    "slug": "poc-production-what-makes-an-agent-system-truly-production-ready",
+    "youtubeId": "JXbg6IrUq08",
+    "date": "2026-02-03",
+    "description": "Your agent works in POC. Then production traffic hits… and everything breaks. Prefer learning with peers? Join the free community for production discussions and war stories: 👉 https://community.nachiketh.in In this video, I break down what actually makes an agent system production-ready — beyond demos, test cases, and happy paths. This is not a tutorial. This is a production checklist built from real failures, 3 AM incidents, and systems",
+    "descriptionFile": "/resources/poc-production-what-makes-an-agent-system-truly-production-ready/description.md",
+    "tags": [
+      "deployment",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/poc-production-what-makes-an-agent-system-truly-production-ready/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/poc-production-what-makes-an-agent-system-truly-production-ready/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/poc-production-what-makes-an-agent-system-truly-production-ready/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Get Free Production Patterns & Interview Prep Resources\n",
+      "url": "https://community.nachiketh.in"
+    }
+  },
+  {
     "title": "Your Agent Memory Architecture Is Costing You $5,600/Month",
     "slug": "your-agent-memory-architecture-is-costing-you-5-600-month",
     "youtubeId": "gXeQ_rf2j-o",

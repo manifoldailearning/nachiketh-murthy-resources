@@ -1,5 +1,39 @@
 [
   {
+    "title": "What Breaks First? The System Design Question That Reveals Production Engineers",
+    "slug": "what-breaks-first-the-system-design-question-that-reveals-production-engineers",
+    "youtubeId": "PLsjzB32-v8",
+    "date": "2026-02-05",
+    "description": "Most teams treat the system prompt like a configuration string. It isn’t. It is a behavioral contract that controls how your agent operates in production. And when that contract changes — even slightly — your entire system behavior can drift without warning. Join the Agentic AI community: 👉 https://community.nachiketh.in When you're ready for structured, production-focused learning: 👉 https://bootcamp.nachiketh.in In this video, we break down",
+    "descriptionFile": "/resources/what-breaks-first-the-system-design-question-that-reveals-production-engineers/description.md",
+    "tags": [
+      "deployment", 
+      "agentic-ai",
+      "interview"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/what-breaks-first-the-system-design-question-that-reveals-production-engineers/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/what-breaks-first-the-system-design-question-that-reveals-production-engineers/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/what-breaks-first-the-system-design-question-that-reveals-production-engineers/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Get Free Production Patterns & Interview Prep Resources\n",
+      "url": "https://community.nachiketh.in"
+    }
+  },
+  {
     "title": "System Prompts Are NOT Config — Treat Them Like Production Infrastructure",
     "slug": "system-prompts-are-not-config-treat-them-like-production-infrastructure",
     "youtubeId": "--B7xraP-uA",

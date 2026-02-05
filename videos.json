@@ -1,5 +1,38 @@
 [
   {
+    "title": "System Prompts Are NOT Config — Treat Them Like Production Infrastructure",
+    "slug": "system-prompts-are-not-config-treat-them-like-production-infrastructure",
+    "youtubeId": "--B7xraP-uA",
+    "date": "2026-02-05",
+    "description": "Most teams treat the system prompt like a configuration string. It isn’t. It is a behavioral contract that controls how your agent operates in production. And when that contract changes — even slightly — your entire system behavior can drift without warning. Join the Agentic AI community: 👉 https://community.nachiketh.in When you're ready for structured, production-focused learning: 👉 https://bootcamp.nachiketh.in In this video, we break down",
+    "descriptionFile": "/resources/system-prompts-are-not-config-treat-them-like-production-infrastructure/description.md",
+    "tags": [
+      "deployment",
+      "agentic-ai"
+    ],
+    "resources": [
+      {
+        "label": "Slides (HTML)",
+        "type": "html",
+        "url": "/resources/system-prompts-are-not-config-treat-them-like-production-infrastructure/slides.html"
+      },
+      {
+        "label": "Slides (PDF)",
+        "type": "pdf",
+        "url": "/resources/system-prompts-are-not-config-treat-them-like-production-infrastructure/slides.pdf"
+      },
+      {
+        "label": "Description",
+        "type": "text",
+        "url": "/resources/system-prompts-are-not-config-treat-them-like-production-infrastructure/description.txt"
+      }
+    ],
+    "primaryCta": {
+      "label": "Get Free Production Patterns & Interview Prep Resources\n",
+      "url": "https://community.nachiketh.in"
+    }
+  },
+  {
     "title": "POC ≠ Production: What Makes an Agent System Truly Production-Ready",
     "slug": "poc-production-what-makes-an-agent-system-truly-production-ready",
     "youtubeId": "JXbg6IrUq08",
@@ -129,6 +162,11 @@
         "label": "Description",
         "type": "text",
         "url": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/description.txt"
+      },
+      {
+        "label": "Source Code",
+        "type": "code",
+        "url": "/resources/all-production-agents-failed-at-this-layer-11-12-systems/failure_examples.py"
       }
     ],
     "primaryCta": {
